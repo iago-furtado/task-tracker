@@ -1,9 +1,10 @@
 <template>
-  <li>
+  <li @click="handleClick" :class="{ 'completed-task': completed }">
     <span v-if="!editing">{{ task }}</span>
     <input v-model="updatedTask" v-if="editing" placeholder="Edit task" />
-    <button v-if="!editing" @click="toggleEdit">Edit</button>
-    <button v-if="!editing" @click="deleteTask">Delete</button>
+    <img v-if="!editing" src="@/assets/edit.png" alt="Edit" class="icon" @click="toggleEdit" />
+    <img v-if="!editing" src="@/assets/delete.png" alt="Delete" class="icon" @click="deleteTask" />
+    <img v-if="!editing" src="@/assets/toggle.png" alt="Toggle" class="icon" />
     <button v-if="editing" @click="saveTask">Save</button>
   </li>
 </template>
@@ -18,6 +19,7 @@ export default {
   data() {
     return {
       editing: false,
+      completed: false,
       updatedTask: this.task,
     };
   },
@@ -31,6 +33,11 @@ export default {
         this.editing = false; // Set editing to false after saving
       }
     },
+    handleClick() {
+      if (!this.editing) {
+        this.completed = !this.completed;
+      }
+    },
     deleteTask() {
       this.$emit('deleteTask', this.index);
     },
@@ -42,10 +49,17 @@ export default {
 li {
   margin-bottom: 5px;
   position: relative;
+  cursor: pointer;
 }
 
-button {
-  margin-left: 5px;
+.icon {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
+  margin-left: 5px;
+}
+
+.completed-task {
+  text-decoration: line-through;
 }
 </style>

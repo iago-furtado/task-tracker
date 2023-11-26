@@ -1,26 +1,59 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <div class="header">
+      <img src="@/assets/logo.png" alt="Vue.js Logo" class="vue-logo" />
+      <h1>Task Tracker</h1>
+    </div>
+    <task-list :tasks="tasks" @addTask="addTask" @deleteTask="deleteTask" @editTask="editTask" />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskList from './components/TaskList.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    TaskList,
+  },
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+  methods: {
+    addTask(newTask) {
+      this.tasks.push(newTask);
+    },
+    deleteTask(index) {
+      this.tasks.splice(index, 1);
+    },
+    editTask(index, updatedTask) {
+      this.tasks[index] = updatedTask;
+    },
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h1 {
+  margin-right: 20px;
+}
+
+.vue-logo {
+  width: 100px;
+  height: 100px;
 }
 </style>

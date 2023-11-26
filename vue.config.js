@@ -1,8 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
-
-// vue.config.js
-module.exports = {
-  devServer: {
-    allowedHosts: ['*'],
-  },
-};
+module.exports = defineConfig({
+  transpileDependencies: true,
+  devserver: {
+    allowedhosts: "all"
+  }
+})
